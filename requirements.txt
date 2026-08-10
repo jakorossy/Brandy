@@ -1,0 +1,24 @@
+# Brandy — Brand Equity Intelligence Pipeline
+# Core
+pandas>=2.0
+openpyxl>=3.1
+pyyaml>=6.0
+requests>=2.31
+beautifulsoup4>=4.12
+nltk>=3.8
+tqdm>=4.65
+python-dotenv>=1.0
+jinja2>=3.1
+streamlit>=1.30
+
+# Market data for WACC (market cap, beta) — free, no API key.
+# FRED supplies the risk-free rate over plain HTTP via requests.
+yfinance>=0.2.60
+
+# Reads Damodaran's legacy .xls industry datasets.
+# Only needed to run run_industry_refresh.py, not the pipeline itself.
+xlrd>=2.0
+
+# Optional — LLM commentary
+openai>=1.0
+# langchain>=0.1       # Future: if LangChain integration is added

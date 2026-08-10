@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>{{ snapshot.brand_name }} — Brand Snapshot {{ snapshot.analysis_date }}</title>
+  <style>
+    :root {
+      --ink: #1a1a1a;
+      --muted: #6b6b6b;
+      --line: #e6e6e6;
+      --accent: #2c5282;
+      --bg-soft: #f7f7f5;
+      --pos: #38a169;
+      --neu: #a0aec0;
+      --neg: #c05621;
+    }
+    * { box-sizing: border-box; }
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+      color: var(--ink);
+      max-width: 760px;
+      margin: 40px auto;
+      padding: 0 24px;
+      line-height: 1.55;
+      font-size: 15px;
+      background: #fff;
+    }
+    header.report-header {
+      border-bottom: 2px solid var(--ink);
+      padding-bottom: 16px;
+      margin-bottom: 28px;
+    }
+    header.report-header h1 {
+      font-size: 28px;
+      margin: 0 0 4px 0;
+      letter-spacing: -0.01em;
+    }
+    header.report-header .ticker {
+      color: var(--muted);
+      font-weight: 500;
+      margin-left: 8px;
+      font-size: 18px;
+    }
+    header.report-header .tagline {
+      color: var(--muted);
+      font-size: 15px;
+      margin: 6px 0 12px 0;
+      font-style: italic;
+    }
+    header.report-header .meta {
+      font-size: 13px;
+      color: var(--muted);
+    }
+    header.report-header .meta span + span::before {
+      content: " · ";
+      margin: 0 4px;
+    }
+    section { margin: 36px 0; }
+    section h2 {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0.10em;
+      color: var(--accent);
+      margin: 0 0 14px 0;
+      padding-bottom: 8px;
+      border-bottom: 1px solid var(--line);
+      font-weight: 700;
+    }
+    .callout {
+      background: var(--bg-soft);
+      border-left: 3px solid var(--accent);
+      padding: 14px 18px;
+      font-size: 16px;
+      line-height: 1.6;
+    }
+    table.metrics {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 0 0 12px 0;
+      font-size: 14px;
+    }
+    table.metrics td {
+      padding: 7px 4px;
+      border-bottom: 1px solid var(--line);
+    }
+    table.metrics td.label {
+      color: var(--muted);
+      width: 55%;
+    }
+    table.metrics td.value {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+      font-weight: 500;
+    }
+    table.metrics td.value .source {
+      color: var(--muted);
+      font-weight: 400;
+      font-size: 12px;
+      margin-left: 4px;
+    }
+    p.takeaway {
+      font-style: italic;
+      color: #333;
+      margin: 14px 0 0 0;
+      padding-left: 12px;
+      border-left: 2px solid #c8c8c8;
+    }
+    .unavailable {
+      color: var(--muted);
+      font-style: italic;
+      padding: 10px 0;
+    }
+    .sentiment-bar {
+      display: flex;
+      width: 100%;
+      height: 8px;
+      border-radius: 4px;
+      overflow: hidden;
+      margin: 8px 0 14px 0;
+      background: var(--line);
+    }
+    .sentiment-bar .seg-pos { background: var(--pos); }
+    .sentiment-bar .seg-neu { background: var(--neu); }
+    .sentiment-bar .seg-neg { background: var(--neg); }
+    .chip {
+      display: inline-block;
+      padding: 2px 10px;
+      border-radius: 12px;
+      background: var(--bg-soft);
+      color: var(--ink);
+      font-size: 12px;
+      font-weight: 500;
+      margin-left: 8px;
+      border: 1px solid var(--line);
+    }
+    .tension-box {
+      background: var(--bg-soft);
+      border: 1px solid var(--line);
+      border-radius: 4px;
+      padding: 12px 16px;
+      font-size: 14px;
+      line-height: 1.6;
+    }
+    .tension-box.none {
+      color: var(--muted);
+      font-style: italic;
+    }
+    section h2.subsection {
+      margin-top: 28px;
+      border-top: 1px solid var(--line);
+      padding-top: 16px;
+    }
+    .caveats {
+      background: #fffaf0;
+      border: 1px solid #f4dbb5;
+      border-radius: 4px;
+      padding: 14px 18px;
+      font-size: 14px;
+    }
+    .caveats .label {
+      font-weight: 600;
+      color: #744210;
+      display: block;
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin-bottom: 2px;
+    }
+    .caveats p { margin: 0 0 10px 0; }
+    .caveats p:last-child { margin-bottom: 0; }
+    footer.lineage {
+      margin-top: 40px;
+      padding-top: 16px;
+      border-top: 1px solid var(--line);
+      font-size: 12px;
+      color: var(--muted);
+      line-height: 1.7;
+    }
+    footer.lineage code {
+      font-family: "SF Mono", Menlo, Consolas, monospace;
+      font-size: 11px;
+      background: var(--bg-soft);
+      padding: 1px 5px;
+      border-radius: 3px;
+      color: #444;
+    }
+    footer.lineage .row { margin: 4px 0; }
+    footer.lineage .row.gap { margin-top: 12px; }
+    footer.lineage .key { display: inline-block; width: 180px; color: #999; }
+  </style>
+</head>
+<body>
+
+  {# ── 1. HEADER ─────────────────────────────────────────────────── #}
+  <header class="report-header">
+    <h1>
+      {{ snapshot.brand_name }}
+      {% if snapshot.ticker %}<span class="ticker">{{ snapshot.ticker }}</span>{% endif %}
+    </h1>
+    {% if tagline %}<div class="tagline">{{ tagline }}</div>{% endif %}
+    <div class="meta">
+      <span>Analysis date: {{ snapshot.analysis_date }}</span>
+      {% if snapshot.financial_fiscal_year %}<span>FY {{ snapshot.financial_fiscal_year }}</span>{% endif %}
+      {% if snapshot.social_data_as_of %}<span>Social as of {{ snapshot.social_data_as_of }}</span>{% endif %}
+    </div>
+  </header>
+
+  {# ── 2. EXECUTIVE SUMMARY ──────────────────────────────────────── #}
+  {% if narrative.summary %}
+  <section>
+    <h2>Executive summary</h2>
+    <div class="callout">{{ narrative.summary }}</div>
+  </section>
+  {% endif %}
+
+  {# ── 3. FINANCIAL SNAPSHOT ─────────────────────────────────────── #}
+  <section>
+    <h2>Financial snapshot</h2>
+    {% if has_financial %}
+    <table class="metrics">
+      <tr><td class="label">Filing date</td><td class="value">{{ snapshot.filing_date | dash }}</td></tr>
+      <tr><td class="label">Fiscal year</td><td class="value">{{ snapshot.financial_fiscal_year | dash }}</td></tr>
+      <tr><td class="label">Revenue</td><td class="value">{{ snapshot.revenue | money }}</td></tr>
+      <tr><td class="label">Gross margin</td><td class="value">{{ snapshot.gross_margin | pct }}</td></tr>
+      <tr><td class="label">Operating margin</td><td class="value">{{ snapshot.operating_margin | pct }}</td></tr>
+      <tr><td class="label">Net margin</td><td class="value">{{ snapshot.net_margin | pct }}</td></tr>
+      <tr>
+        <td class="label">EBITDA</td>
+        <td class="value">
+          {{ snapshot.ebitda | money }}
+          {% if snapshot.ebitda_source %}<span class="source">({{ snapshot.ebitda_source }})</span>{% endif %}
+        </td>
+      </tr>
+      <tr><td class="label">EPS (diluted)</td><td class="value">{{ snapshot.eps_diluted | ratio }}</td></tr>
+      <tr><td class="label">Free cash flow</td><td class="value">{{ snapshot.free_cash_flow | money }}</td></tr>
+      <tr><td class="label">ROE</td><td class="value">{{ snapshot.roe | pct }}</td></tr>
+      <tr><td class="label">Debt-to-equity</td><td class="value">{{ snapshot.debt_to_equity | ratio }}</td></tr>
+      <tr><td class="label">WACC</td><td class="value">{{ snapshot.wacc | pct }}</td></tr>
+    </table>
+    {% if narrative.financial_takeaway %}
+    <p class="takeaway">{{ narrative.financial_takeaway }}</p>
+    {% endif %}
+    {% else %}
+    <div class="unavailable">Financial data not available for this brand.</div>
+    {% endif %}
+  </section>
+
+  {# ── 4. SOCIAL & SENTIMENT SNAPSHOT ────────────────────────────── #}
+  <section>
+    <h2>Social &amp; sentiment snapshot</h2>
+    {% if has_social %}
+    <table class="metrics">
+      <tr><td class="label">Primary platform</td><td class="value">{{ snapshot.primary_platform | dash }}</td></tr>
+      <tr><td class="label">Followers</td><td class="value">{{ snapshot.total_followers | compact }}</td></tr>
+      <tr><td class="label">Posts analyzed</td><td class="value">{{ snapshot.total_posts_analyzed | intfmt }}</td></tr>
+      <tr><td class="label">Total likes</td><td class="value">{{ snapshot.total_likes | compact }}</td></tr>
+      <tr><td class="label">Total comments</td><td class="value">{{ snapshot.total_comments | compact }}</td></tr>
+      <tr><td class="label">Avg likes / post</td><td class="value">{{ snapshot.avg_likes_per_post | compact }}</td></tr>
+      <tr><td class="label">Avg comments / post</td><td class="value">{{ snapshot.avg_comments_per_post | ratio }}</td></tr>
+      <tr><td class="label">Engagement rate</td><td class="value">{{ snapshot.engagement_rate | pct }}</td></tr>
+    </table>
+
+    {% if has_sentiment %}
+    <h2 class="subsection">
+      Sentiment
+      {% if sentiment_label_text %}<span class="chip">{{ sentiment_label_text }}</span>{% endif %}
+    </h2>
+    <div class="sentiment-bar" title="Positive / Neutral / Negative share">
+      <div class="seg-pos" style="width: {{ (snapshot.sentiment_positive_pct or 0) * 100 }}%;"></div>
+      <div class="seg-neu" style="width: {{ (snapshot.sentiment_neutral_pct or 0) * 100 }}%;"></div>
+      <div class="seg-neg" style="width: {{ (snapshot.sentiment_negative_pct or 0) * 100 }}%;"></div>
+    </div>
+    <table class="metrics">
+      <tr><td class="label">Positive</td><td class="value">{{ snapshot.sentiment_positive_pct | pct }}</td></tr>
+      <tr><td class="label">Neutral</td><td class="value">{{ snapshot.sentiment_neutral_pct | pct }}</td></tr>
+      <tr><td class="label">Negative</td><td class="value">{{ snapshot.sentiment_negative_pct | pct }}</td></tr>
+      <tr><td class="label">Average score (−1 to +1)</td><td class="value">{{ snapshot.avg_sentiment_score | score }}</td></tr>
+      <tr><td class="label">Comments analyzed</td><td class="value">{{ snapshot.comments_analyzed | intfmt }}</td></tr>
+    </table>
+    {% else %}
+    <div class="unavailable" style="margin-top:12px;">No comment-basis sentiment data available.</div>
+    {% endif %}
+
+    {% if narrative.social_takeaway %}
+    <p class="takeaway">{{ narrative.social_takeaway }}</p>
+    {% endif %}
+    {% else %}
+    <div class="unavailable">Social data not available for this brand.</div>
+    {% endif %}
+  </section>
+
+  {# ── 5. KEY TENSION ────────────────────────────────────────────── #}
+  {% if narrative.key_tension %}
+  <section>
+    <h2>Key tension</h2>
+    <div class="tension-box{% if narrative.key_tension == 'None identified' %} none{% endif %}">
+      {{ narrative.key_tension }}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 6. CAVEATS ────────────────────────────────────────────────── #}
+  {% if narrative.data_limitations or narrative.confidence_note %}
+  <section>
+    <h2>Caveats</h2>
+    <div class="caveats">
+      {% if narrative.data_limitations %}
+      <p><span class="label">Data limitations</span>{{ narrative.data_limitations }}</p>
+      {% endif %}
+      {% if narrative.confidence_note %}
+      <p><span class="label">Confidence</span>{{ narrative.confidence_note }}</p>
+      {% endif %}
+    </div>
+  </section>
+  {% endif %}
+
+  {# ── 7. METHODOLOGY & LINEAGE ──────────────────────────────────── #}
+  <footer class="lineage">
+    {% if snapshot.sentiment_methodology %}
+    <div class="row"><span class="key">Sentiment methodology</span>{{ snapshot.sentiment_methodology }}</div>
+    {% endif %}
+    {% if snapshot.financial_run_id %}
+    <div class="row gap"><span class="key">Financial run</span><code>{{ snapshot.financial_run_id }}</code></div>
+    {% endif %}
+    {% if snapshot.social_run_id %}
+    <div class="row"><span class="key">Social run</span><code>{{ snapshot.social_run_id }}</code></div>
+    {% endif %}
+    {% if snapshot.narrative_model %}
+    <div class="row"><span class="key">Narrative model</span><code>{{ snapshot.narrative_model }}</code></div>
+    {% endif %}
+    {% if snapshot.narrative_generated_at %}
+    <div class="row"><span class="key">Narrative generated</span>{{ snapshot.narrative_generated_at }}</div>
+    {% endif %}
+  </footer>
+
+</body>
+</html>

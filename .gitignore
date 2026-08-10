@@ -1,0 +1,66 @@
+# ── Secrets ────────────────────────────────────────────────────────
+.env
+
+# ── Database ────────────────────────────────────────────────────────
+# brandy.db is created automatically on first run — do not version it
+brandy.db
+
+# ── Generated outputs ───────────────────────────────────────────────
+output/*
+!output/reports/.gitkeep
+!output/snapshots/.gitkeep
+output/reports/*
+!output/reports/.gitkeep
+output/snapshots/*
+!output/snapshots/.gitkeep
+
+# ── Input data ──────────────────────────────────────────────────────
+# Raw social data files are large (100MB+) and may contain scraped content.
+# Place your own files in data/raw/ following the naming convention in QUICKSTART.md.
+data/raw/*
+!data/raw/.gitkeep
+data/intermediate/*
+!data/intermediate/.gitkeep
+
+# ── Python ──────────────────────────────────────────────────────────
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.egg-info/
+dist/
+build/
+.eggs/
+*.egg
+
+# ── Virtual environments ─────────────────────────────────────────────
+venv/
+.venv/
+env/
+.env/
+ENV/
+
+# ── OS / editor artifacts ────────────────────────────────────────────
+.DS_Store
+**/.DS_Store
+.fuse_hidden*
+Thumbs.db
+*.swp
+*.swo
+*~
+
+# ── IDE ──────────────────────────────────────────────────────────────
+.vscode/
+.idea/
+*.iml
+
+# ── Claude Code local settings ───────────────────────────────────────
+.claude/
+
+# ── Legacy tool generated outputs ────────────────────────────────────
+10K_Financial_Analyzer/Financial_Analysis_Output/
+
+# ── Misc ─────────────────────────────────────────────────────────────
+*.png
+*.jpg
+*.jpeg

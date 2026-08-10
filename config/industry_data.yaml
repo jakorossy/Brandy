@@ -1,0 +1,106 @@
+# ── Industry-average fallbacks for WACC inputs ────────────────────────
+#
+# GENERATED FILE — do not hand-edit the values.
+# Regenerate with:  python run_industry_refresh.py
+#
+# Used only when a company-specific value can't be sourced (e.g. Yahoo has
+# no beta for a thinly-traded name, or a filer doesn't tag interest expense).
+# Every substituted value is recorded in the WACC assumptions_note so the
+# audit trail shows it wasn't company-specific.
+#
+# Source: Aswath Damodaran, NYU Stern — updated each January.
+#   https://pages.stern.nyu.edu/~adamodar/pc/datasets/betas.xls
+#   https://pages.stern.nyu.edu/~adamodar/pc/datasets/wacc.xls
+#
+# beta_unlevered is the cash-corrected asset beta. Prefer re-levering it to
+# the company's own D/E over using beta_levered, which reflects the average
+# leverage of the industry rather than of the company being valued.
+#
+# To add a ticker, edit DEFAULT_TICKER_SECTORS in run_industry_refresh.py.
+
+as_of: '2026-01-05'
+verified: true
+source: "Aswath Damodaran, NYU Stern \u2014 betas.xls + wacc.xls"
+refreshed_by: run_industry_refresh.py
+refreshed_on: '2026-08-02'
+equity_risk_premium: 0.0446
+damodaran_risk_free_rate: 0.0395
+default:
+  equity_risk_premium: 0.0446
+  beta: 0.9121
+  beta_unlevered: 0.7557
+  pre_tax_cost_of_debt: 0.0529
+  marginal_tax_rate: 0.21
+sectors:
+  apparel:
+    damodaran_industry: Apparel
+    number_of_firms: 35
+    beta_levered: 0.9359
+    beta_unlevered: 0.7946
+    debt_to_equity: 0.3129
+    effective_tax_rate: 0.0961
+    pre_tax_cost_of_debt: 0.0529
+    cost_of_capital: 0.0713
+    equity_risk_premium: 0.0446
+    beta: 0.9359
+    marginal_tax_rate: 0.21
+  footwear:
+    damodaran_industry: Shoe
+    number_of_firms: 11
+    beta_levered: 1.0173
+    beta_unlevered: 1.0002
+    debt_to_equity: 0.1194
+    effective_tax_rate: 0.1186
+    pre_tax_cost_of_debt: 0.0529
+    cost_of_capital: 0.0801
+    equity_risk_premium: 0.0446
+    beta: 1.0173
+    marginal_tax_rate: 0.21
+  specialty_retail:
+    damodaran_industry: Retail (Special Lines)
+    number_of_firms: 94
+    beta_levered: 1.0894
+    beta_unlevered: 1.0019
+    debt_to_equity: 0.1976
+    effective_tax_rate: 0.1007
+    pre_tax_cost_of_debt: 0.0529
+    cost_of_capital: 0.0801
+    equity_risk_premium: 0.0446
+    beta: 1.0894
+    marginal_tax_rate: 0.21
+  general_retail:
+    damodaran_industry: Retail (General)
+    number_of_firms: 23
+    beta_levered: 0.8052
+    beta_unlevered: 0.7809
+    debt_to_equity: 0.0794
+    effective_tax_rate: 0.191
+    pre_tax_cost_of_debt: 0.0507
+    cost_of_capital: 0.0727
+    equity_risk_premium: 0.0446
+    beta: 0.8052
+    marginal_tax_rate: 0.21
+  market:
+    damodaran_industry: Total Market
+    number_of_firms: 5994
+    beta_levered: 0.9121
+    beta_unlevered: 0.7557
+    debt_to_equity: 0.3517
+    effective_tax_rate: 0.083
+    pre_tax_cost_of_debt: 0.0529
+    cost_of_capital: 0.0696
+    equity_risk_premium: 0.0446
+    beta: 0.9121
+    marginal_tax_rate: 0.21
+ticker_sectors:
+  NKE: footwear
+  LULU: apparel
+  UAA: apparel
+  UA: apparel
+  GAP: specialty_retail
+  AEO: specialty_retail
+  VSCO: specialty_retail
+  PVH: apparel
+  RL: apparel
+  LEVI: apparel
+  VFC: apparel

@@ -1,0 +1,43 @@
+# ── Financial Arm Configuration ───────────────────────────────────
+
+# WACC fallbacks. These apply only when a live value can't be sourced —
+# the risk-free rate normally comes from FRED, beta and market cap from
+# Yahoo Finance, and tax rate from the filing itself. Industry-average
+# fallbacks live in config/industry_data.yaml.
+wacc_defaults:
+  risk_free_rate: 0.043               # 10-year Treasury yield
+  equity_risk_premium: 0.055          # Historical US ERP
+  beta: 1.0                           # Market average
+  pre_tax_cost_of_debt: 0.05          # Estimated
+  tax_rate: 0.21                      # US corporate rate
+
+  # Count capitalised operating leases as debt in the capital structure.
+  # Strongly recommended for apparel/retail, where store lease portfolios
+  # are the dominant financing obligation and excluding them makes
+  # lease-heavy brands look artificially unlevered.
+  include_operating_leases: true
+
+# XBRL extraction preferences
+xbrl:
+  preferred_source: true              # Use XBRL before HTML parsing
+  fallback_to_html: true              # Use HTML tables if XBRL is incomplete
+  fallback_to_llm: false              # Use LLM extraction as last resort
+
+# Metrics to extract
+metrics:
+  - revenue
+  - cost_of_revenue
+  - gross_profit
+  - operating_expenses
+  - operating_income
+  - net_income
+  - eps_diluted
+  - total_assets
+  - total_liabilities
+  - shareholders_equity
+  - cash_and_equivalents
+  - operating_cash_flow
+  - capital_expenditures
+  - depreciation_amortization
+  - interest_expense
+  - tax_expense

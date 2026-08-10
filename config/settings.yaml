@@ -1,0 +1,23 @@
+# ── Brandy Pipeline Settings ──────────────────────────────────────
+# Copy this file and fill in your values.
+
+sec:
+  email: "your@email.com"        # Required by SEC EDGAR
+  rate_limit_delay: 0.4               # Seconds between requests (max 10/sec)
+  years_of_filings: 3                 # How many years of 10-K to fetch
+
+llm:
+  model: "gpt-4.1-mini"
+  temperature: 0.3
+  max_tokens: 500
+  # Set OPENAI_API_KEY as environment variable
+
+database:
+  path: "brandy.db"                   # Relative to project root
+
+output:
+  directory: "output"
+  save_intermediate: true             # Save debug outputs to data/intermediate/
+
+logging:
+  level: "INFO"                       # DEBUG | INFO | WARNING | ERROR

@@ -1,0 +1,51 @@
+# ── Social Arm Configuration ──────────────────────────────────────
+
+# Provider selection: local_file | scrapecreators
+# Can be overridden on the CLI with --provider
+provider: local_file
+
+# Data directory — used by local_file provider only
+data_directory: "data/raw"
+
+# ScrapeCreators live API settings
+scrapecreators:
+  post_limit: 50                      # Max posts to fetch per brand/platform
+
+# Platforms to analyze
+platforms:
+  - Instagram
+  - LinkedIn
+  - FaceBook                          # Keep this spelling for file compatibility
+
+# Sentiment thresholds
+sentiment:
+  positive_threshold: 0.05
+  negative_threshold: -0.05
+  min_comment_length: 5               # Shorter = irrelevant
+
+# Spam keywords — comments containing these are flagged
+spam_keywords:
+  - "follow me"
+  - "follow back"
+  - "f4f"
+  - "l4l"
+  - "check my"
+  - "dm me"
+  - "dm for"
+  - "click the link"
+  - "link in bio"
+  - "free followers"
+  - "buy followers"
+  - "make money"
+  - "giveaway"
+  - "congratulations you won"
+  - "claim your"
+  - "visit my profile"
+  - "check out my"
+
+# Brand scoring weights (DEFERRED — not used yet)
+# scoring_weights:
+#   likes: 0.20
+#   comments: 0.30
+#   sentiment: 0.30
+#   followers: 0.20
